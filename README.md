@@ -1,6 +1,6 @@
-# Este es mi archivo readme
+# Desarrollo API Rest
 
-Este archivo se escribe en formato markdown.
+En este repositorio se trabaja con API Rest para la asignatura de Despliegue de Aplicaciones Web.
 
 ## Propósito del proyecto
 
