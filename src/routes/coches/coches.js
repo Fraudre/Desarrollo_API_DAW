@@ -29,7 +29,19 @@ router.get("/:id", (request, response) => {
   const concesionario = concesionarios.find((c) => c.id === concesionarioId);
   const cocheId = parseInt(request.params.id);
   const coche = concesionario.listado_coches.find((c) => c.id === cocheId);
-  response.json({coche});
+  response.json({ coche });
+});
+
+router.put("/:id", (request, response) => {
+  const concesionarioId = parseInt(request.baseUrl.split("/").slice(-2, -1)[0]);
+  const concesionario = concesionarios.find((c) => c.id === concesionarioId);
+  const cocheId = parseInt(request.params.id);
+  const coche = concesionario.listado_coches.find((c) => c.id === cocheId);
+  const cocheAct = {
+    ...concesionario.listado_coches[cocheId],
+    ...request.body,
+  };
+  response.json({message: "ok"});
 });
 
 module.exports = router;
