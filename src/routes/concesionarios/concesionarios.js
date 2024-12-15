@@ -28,7 +28,7 @@ router.put("/:id", (request, response) => {
     const id = parseInt(request.params.id);
     const concesionario = concesionarios.find((c) => c.id === id);
     const concesionarioAct = {
-        ...concesionarios[concesionario], ...request.body;
+        ...concesionarios[concesionario], ...request.body
     };
     response.json({message: "ok"});
 });
