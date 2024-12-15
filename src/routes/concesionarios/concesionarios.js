@@ -31,6 +31,12 @@ router.put("/:id", (request, response) => {
         ...concesionarios[concesionario], ...request.body;
     };
     response.json({message: "ok"});
-})
+});
+
+router.delete("/:id", (request, response) => {
+    const id = parseInt(request.params.id);
+    const concesionario = concesionarios.find((c) => c.id === id);
+    response.json({message: "ok"});
+});
 
 module.exports = router;
