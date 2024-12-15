@@ -1,11 +1,11 @@
 const express = require("express");
 
-//const concesionarios = require("./models/concesionario");
+const router = require("./index");
 
 const app = express();
 
 app.use(express.json());
 
-//app.use("/concesionarios", concesionarios);
+app.use("/", router);
 
 module.exports = app;
