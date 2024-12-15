@@ -18,4 +18,10 @@ router.post("/", (request, response) => {
     response.json({message: "ok"});
 });
 
+router.get("/:id", (request, response) => {
+    const id = parseInt(request.params.id);
+    const concesionario = concesionarios.find((c) => c.id === id);
+    response.json({concesionario});
+});
+
 module.exports = router;
