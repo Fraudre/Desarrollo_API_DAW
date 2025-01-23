@@ -81,9 +81,10 @@ app.get("/coches/:id", async (request, response) => {
 });
 
 // Actualizar un solo coche
-app.put("/coches/:id", (request, response) => {
-  const id = request.params.id;
-  coches[id] = request.body;
+app.put("/coches/:id", async (request, response) => {
+  const id = new ObjectId(request.params.id);
+  await db.collection("coches").updateOne({ _id: id }, { $set: request.body });
+
   response.json({ message: "ok" });
 });
 
