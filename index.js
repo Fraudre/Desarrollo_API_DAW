@@ -89,9 +89,9 @@ app.put("/coches/:id", async (request, response) => {
 });
 
 // Borrar un elemento del array
-app.delete("/coches/:id", (request, response) => {
-  const id = request.params.id;
-  coches = coches.filter((item) => coches.indexOf(item) !== id);
+app.delete("/coches/:id", async (request, response) => {
+  const id = new ObjectId(request.params.id);
+  await db.collection("coches").deleteOne({ _id: id });
 
   response.json({ message: "ok" });
 });
