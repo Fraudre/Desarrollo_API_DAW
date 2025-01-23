@@ -70,8 +70,9 @@ app.get("/coches", async (request, response) => {
 });
 
 // Añadir un nuevo coche
-app.post("/coches", (request, response) => {
-  coches.push(request.body);
+app.post("/coches", async (request, response) => {
+  await db.collection("coches").insertOne(request.body);
+
   response.json({ message: "ok" });
 });
 
