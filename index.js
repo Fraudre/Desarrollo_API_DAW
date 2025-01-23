@@ -23,11 +23,6 @@ app.use(express.json());
 // Indicamos el puerto en el que vamos a desplegar la aplicación
 const port = process.env.PORT || 8080;
 
-// Arrancamos la aplicación
-app.listen(port, () => {
-  console.log(`Servidor desplegado en puerto: ${port}`);
-});
-
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
   serverApi: {
@@ -38,6 +33,14 @@ const client = new MongoClient(uri, {
 });
 
 let db;
+
+// Arrancamos la aplicación
+app.listen(port, async () => {
+  await client.connect();
+  db = await client.db("mi-proyecto");
+
+  console.log(`Servidor desplegado en puerto: ${port}`);
+});
 
 async function run() {
   try {
@@ -55,13 +58,6 @@ async function run() {
 }
 run().catch(console.dir);
 
-// Definimos una estructura de datos
-// (temporal hasta incorporar una base de datos)
-let coches = [
-  { marca: "Renault", modelo: "Clio" },
-  { marca: "Nissan", modelo: "Skyline R34" },
-];
-
 // Lista todos los coches
 app.get("/coches", async (request, response) => {
   const coches = await db.collection("coches").find({}).toArray();
@@ -77,10 +73,11 @@ app.post("/coches", async (request, response) => {
 });
 
 // Obtener un solo coche
-app.get("/coches/:id", (request, response) => {
-  const id = request.params.id;
-  const result = coches[id];
-  response.json({ result });
+app.get("/coches/:id", async (request, response) => {
+  const id = new ObjectId(request.params.id);
+  const coche = await db.collection("coches").find({ _id: id }).toArray();
+
+  response.json({ coche });
 });
 
 // Actualizar un solo coche
