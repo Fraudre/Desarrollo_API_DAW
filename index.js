@@ -37,6 +37,8 @@ const client = new MongoClient(uri, {
   },
 });
 
+let db;
+
 async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
@@ -61,7 +63,9 @@ let coches = [
 ];
 
 // Lista todos los coches
-app.get("/coches", (request, response) => {
+app.get("/coches", async (request, response) => {
+  const coches = await db.collection("coches").find({}).toArray();
+
   response.json(coches);
 });
 
