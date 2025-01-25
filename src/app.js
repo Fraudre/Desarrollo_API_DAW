@@ -1,17 +1,21 @@
 const express = require("express");
-const helmet = require("helmet"); // Importa Helmet
-
-const router = require("./index");
+const helmet = require("helmet");
+const swaggerUi = require("swagger-ui-express");
+const swaggerDocument = require("../swagger.json");
+const routes = require("./routes/routes.js"); // Importa las rutas
 
 const app = express();
 
-// Usa Helmet como middleware
+// Configura Helmet como middleware
 app.use(helmet());
 
 // Configura Express para procesar JSON
 app.use(express.json());
 
-// Configura las rutas
-app.use("/", router);
+// Ruta para la documentación de Swagger
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
+// Usa las rutas definidas
+app.use("/", routes);
 
 module.exports = app;

@@ -2,7 +2,7 @@ const express = require("express");
 
 const router = express.Router();
 
-const concesionarios = require("../../models/concesionario");
+const concesionarios = require("../../models/concesionario.js");
 
 router.get("/", (request, response) => {
     response.json(concesionarios);

@@ -1,9 +1,24 @@
-const express = require("express");
+const app = require("./app.js"); // Importa la aplicación configurada
+const { MongoClient } = require("mongodb");
+require("dotenv").config();
 
-const router = express.Router();
+const port = process.env.PORT || 8080; // Puerto del servidor
+const uri = "mongodb+srv://faudre755:zxuctr2004@cluster0.42hdh.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+const client = new MongoClient(uri);
 
-router.use("/concesionarios", require("./routes/concesionarios/concesionarios"));
+let db;
 
-router.use("/concesionarios/:id/coches", require("./routes/coches/coches"));
+app.listen(port, async () => {
+  try {
+    // Conexión a MongoDB
+    await client.connect();
+    db = client.db("Cluster0");
+    console.log(`Connected to MongoDB and server running on port: ${port}`);
+  } catch (error) {
+    console.error("Failed to connect to MongoDB:", error.message);
+    process.exit(1); // Termina la ejecución si la conexión falla
+  }
+});
 
-module.exports = router;
+// Exportar la base de datos para su uso en otros módulos
+module.exports = { db };
