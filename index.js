@@ -7,6 +7,9 @@
 
 // Importamos las bibliotecas necesarias.
 // Concretamente el framework express.
+const swaggerUi = require("swagger-ui-express");
+const swaggerDocument = require("./swagger.json");
+
 const { MongoClient, ServerApiVersion } = require("mongodb");
 const express = require("express");
 
@@ -19,6 +22,9 @@ const uri = process.env.MONGODB;
 
 // Indicamos que la aplicación puede recibir JSON (API Rest)
 app.use(express.json());
+
+//Definimos la ruta /api-docs
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // Indicamos el puerto en el que vamos a desplegar la aplicación
 const port = process.env.PORT || 8080;
