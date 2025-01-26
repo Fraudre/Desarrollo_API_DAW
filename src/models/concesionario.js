@@ -1,21 +1,24 @@
-let concesionarios = [{
+const concesionarios = [
+  {
     id: 1,
-    nombre: "concesionario1",
-    direccion: "calle falsa 123",
-    listado_coches: [{ id: 1, modelo: "Corsa", potencia: 100, precio: 4500},
-        { id: 2, modelo: "Forz", potencia: 200, precio: 3500},
-        { id: 3, modelo: "BMW", potencia: 300, precio: 5000}
+    nombre: "Concesionario 1",
+    direccion: "Calle falsa 123",
+    listado_coches: [
+      { id: 1, modelo: "Corsa", potencia: 100, precio: 4500 },
+      { id: 2, modelo: "Forz", potencia: 200, precio: 3500 },
+      { id: 3, modelo: "BMW", potencia: 300, precio: 5000 }
     ]
-},
-{
+  },
+  {
     id: 2,
-    nombre: "concesionario2",
-    direccion: "calle falsa 456",
-    listado_coches: [{ id: 1, modelo: "Dacia", potencia: 404, precio: 3000},
-        { id: 2, modelo: "Volvo", potencia: 204, precio: 4560},
-        { id: 3, modelo: "Renault", potencia: 234, precio: 2510}
+    nombre: "Concesionario 2",
+    direccion: "Calle falsa 456",
+    coches: [
+      { id: 1, modelo: "Dacia", potencia: 404, precio: 3000 },
+      { id: 2, modelo: "Volvo", potencia: 204, precio: 4560 },
+      { id: 3, modelo: "Renault", potencia: 234, precio: 2510 }
     ]
-}
+  }
 ];
 
 module.exports = concesionarios;

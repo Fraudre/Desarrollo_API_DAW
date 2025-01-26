@@ -9,25 +9,34 @@
     "Coche": {
       "type": "object",
       "properties": {
-        "marca": {
-          "type": "string"
+        "id": {
+          "type": "integer"
         },
         "modelo": {
           "type": "string"
+        },
+        "potencia": {
+          "type": "integer"
+        },
+        "precio": {
+          "type": "integer"
         }
       },
-      "required": ["marca", "modelo"]
+      "required": ["modelo", "potencia", "precio"]
     },
     "Concesionario": {
       "type": "object",
       "properties": {
+        "id": {
+          "type": "integer"
+        },
         "nombre": {
           "type": "string"
         },
         "direccion": {
           "type": "string"
         },
-        "coches": {
+        "listado_coches": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/Coche"
@@ -64,16 +73,6 @@
             "name": "concesionario",
             "schema": {
               "$ref": "#/definitions/Concesionario"
-            },
-            "example": {
-              "nombre": "AutoCenter",
-              "direccion": "Calle Principal 123",
-              "coches": [
-                {
-                  "marca": "Nissan",
-                  "modelo": "Skyline R34"
-                }
-              ]
             }
           }
         ],
@@ -93,7 +92,7 @@
             "in": "path",
             "name": "id",
             "required": true,
-            "type": "string"
+            "type": "integer"
           }
         ],
         "responses": {
@@ -114,23 +113,13 @@
             "in": "path",
             "name": "id",
             "required": true,
-            "type": "string"
+            "type": "integer"
           },
           {
             "in": "body",
             "name": "concesionario",
             "schema": {
               "$ref": "#/definitions/Concesionario"
-            },
-            "example": {
-              "nombre": "AutoCenter",
-              "direccion": "Calle Principal 123",
-              "coches": [
-                {
-                  "marca": "Nissan",
-                  "modelo": "Skyline R34"
-                }
-              ]
             }
           }
         ],
@@ -143,18 +132,152 @@
       "delete": {
         "summary": "Delete concesionario",
         "operationId": "deleteConcesionario",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "{message: 'ok'}"
+          }
+        }
+      }
+    },
+    "/concesionarios/{id}/coches": {
+      "get": {
+        "summary": "Fetch coches for a concesionario",
+        "operationId": "getCoches",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of coches in concesionario.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Coche"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Create coche for a concesionario",
+        "operationId": "createCoche",
         "consumes": ["application/json"],
         "parameters": [
           {
             "in": "path",
             "name": "id",
             "required": true,
-            "type": "string"
+            "type": "integer"
+          },
+          {
+            "in": "body",
+            "name": "coche",
+            "schema": {
+              "$ref": "#/definitions/Coche"
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "{message: 'ok'}"
+            "description": "Coche created",
+            "schema": {
+              "$ref": "#/definitions/Coche"
+            }
+          }
+        }
+      }
+    },
+    "/concesionarios/{id}/coches/{cocheId}": {
+      "get": {
+        "summary": "Get a coche by id",
+        "operationId": "getCoche",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "path",
+            "name": "cocheId",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Fetch coche details.",
+            "schema": {
+              "$ref": "#/definitions/Coche"
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Update coche by id",
+        "operationId": "updateCoche",
+        "consumes": ["application/json"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "path",
+            "name": "cocheId",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "body",
+            "name": "coche",
+            "schema": {
+              "$ref": "#/definitions/Coche"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Coche updated"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete coche by id",
+        "operationId": "deleteCoche",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "path",
+            "name": "cocheId",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Coche deleted"
           }
         }
       }
